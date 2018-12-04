@@ -240,7 +240,7 @@ export default class Master extends Component {
                 labelsarray = {this.state.ActiveLabels}
                 allLabels = {this.state.AllLabels}
                 handleChange={this.handleChange} />
-                <Minimap></Minimap>
+                {/* <Minimap></Minimap> */}
                 <div className="issueloader">
                     <IssueLoader 
                     cards={this.state.issueArray} 
