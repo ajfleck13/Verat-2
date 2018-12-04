@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import IssueComment from './IssueComment';
+import Button from '@material-ui/core/Button';
 import './issuestructure.css'
 
 const baseURL = "https://api.github.com"
@@ -17,9 +18,9 @@ export default class IssueWindow extends Component {
         // const username = this.props.username;
         // const reponame = this.props.reponame;
         // const issueNumber = this.props.issueNumber;
-        const username = 'ajfleck13'
-        const reponame = 'Project-Verat'
-        const issueNumber = 36
+        const username = this.props.username || 'ajfleck13'
+        const reponame = this.props.reponame || 'Project-Verat'
+        const issueNumber = this.props.issue || 36
 
         axios.get(baseURL + `/repos/${username}/${reponame}/issues/${issueNumber}`)
         .then((response) => {
@@ -46,6 +47,9 @@ export default class IssueWindow extends Component {
         console.log(this.state.loadedTitle)
         return(
             <div>
+                <Button color="primary" onClick={this.props.cancelView}>
+                    Go Back
+                </Button>
                 {this.state.loadedTitle? 
                 <div>
                     <h2>{`${this.state.titleComment.title} #${this.state.titleComment.number}`}</h2>

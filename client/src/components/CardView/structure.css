@@ -1,6 +1,6 @@
 .issueloader {
     position: fixed;
-    top: 0px;
+    top: 50px;
     width: 100%;
     height: 300px;
 }
@@ -32,9 +32,9 @@
     position: absolute;
     left: 0;
     height: 100%;
-    /* max-width: 100%; */
+    min-width: 100%;
     overflow: scroll;
-    background-color: darkblue;
+    background-color:  #003380;
 }
 
 .newrelease {
@@ -42,23 +42,44 @@
     margin: 30px;
     height: 300px;
     width: 300px;
-    background-color: blue;
+    background-color: #1a75ff;
 }
 
 .release {
     display: inline-block;
     position: relative;
+    padding: 10px;
     margin: 30px;
     /* top: 30px; */
-    height: 100%;
+    /* height: 100%; */
+    min-height: 100%;
     width: 300px;
-    background-color: aqua;
+    background-color: #1a75ff;
+    overflow: auto;
 }
 
 .cardlocater:hover {
-    border: 5px #3a9c3a solid;
+    border: 2px #3a9c3a solid;
 }
 
 .draggingCardsPreventEvents {
     pointer-events: none;
+}
+
+.minimapclass {
+    height: 200px;
+}
+
+.searchinput {
+    width: 60%;
+}
+
+.filterlabelwidth{
+    width: 80px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.issuecardheader {
+    padding: 8px;
 }

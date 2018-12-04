@@ -16,10 +16,13 @@ export default class ReleaseView extends Component {
                             cards={this.props.cards} 
                             issues={release} 
                             dragHandlers={this.props.dragHandlers}
-                            releaseindex={index}/>
+                            releaseindex={index}
+                            viewIssue={this.props.viewIssue}/>
                         ))
                     }
-                    <div className={`newrelease ${this.props.isDragging? "cardlocater" : ""}`} data-releaseindex={this.props.allReleases.length}></div>
+                    <div className={`newrelease ${this.props.isDragging? "cardlocater" : ""}`} data-releaseindex={this.props.allReleases.length}>
+                        <h2>Create New</h2>
+                    </div>
                 </div>
             </div>
         )

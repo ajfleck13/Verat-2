@@ -18,16 +18,16 @@ const SaveSchema = new Schema({
       type: Int,
     }
   ],
-  arrowsTo: [
-    {
-      type: Int,
-    }
-  ],
-  arrowsFrom: [
-    {
-      type: Int
-    }
-  ]
+  // arrowsTo: [
+  //   {
+  //     type: Int,
+  //   }
+  // ],
+  // arrowsFrom: [
+  //   {
+  //     type: Int
+  //   }
+  // ]
 });
 
 // This creates our model from the above schema, using Mongoose's model method

@@ -36,16 +36,21 @@ const IssueCard = (props) => {
         data-issue={props.issue.number}
         style={props.style}>
             <CardActionArea>
-                <CardHeader 
-                    title = {props.issue.title}
-                />
-                <CardContent>
-                <Typography component="p">
+                <div className="issuecardheader"
+                onMouseDown={() => {props.viewIssue(props.issue.number)}}>
+                    <CardHeader 
+                    style = {{padding: "4px", fontSize: "20px", maxHeight: "90px", overflow: "hidden"}}
+                    title = {`#${props.issue.number} ${props.issue.title}`}
+                    />
+                </div>
+                <CardContent style={{overflow: "hidden", maxHeight: "100px", padding: "8px"}}>
+                <Typography
+                component="p">
                     {props.issue.body}
                 </Typography>
-                <Typography gutterBottom variant="h5" component="h2">
+                {/* <Typography gutterBottom variant="h5" component="h2">
                     #{props.issue.number}
-                </Typography>
+                </Typography> */}
                 </CardContent>
             </CardActionArea>
             {/* <CardActions>

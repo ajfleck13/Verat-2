@@ -12,8 +12,9 @@ import './issuestructure.css'
 
 const styles = theme => ({
   card: {
-    maxWidth: '75%',
-    margin: '10px'
+    maxWidth: '90%',
+    margin: 'auto',
+    marginTop: 30
   }
 //   media: {
 //     height: 0,

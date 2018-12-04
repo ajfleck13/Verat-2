@@ -5,27 +5,29 @@ import ReleaseView from './CardView/ReleaseView'
 import Draggable from 'react-draggable';
 import IssueWindow from './IssueWindow/IssueWindow'
 import SearchFilter from './CardView/SearchFilter'
+import Minimap from './Minimap'
+
+let baseURL = 'https://api.github.com'
 
 export default class Master extends Component {
     state = {
         issueArray: {},
         isDragging: false,
-        AllReleases: []
+        AllReleases: [],
+        ActiveLabels: [],
+        AllLabels: [],
+        username: 'ajfleck13',
+        repo: 'Project-Verat',
+        ViewingIssue: false
     }
 
     componentDidMount() {
         this.getMorePosts();
+        this.getAllLabels();
     }
 
-    getMorePosts() {
-        //let inputArray = repositorytext.split("/");
-        //username = inputArray[0];
-        //repo = inputArray[1];
-        let username = 'ajfleck13'
-        let repo = 'Project-Verat'
-        let baseURL = 'https://api.github.com'
-        
-        let urlRepo = baseURL + `/repos/${username}/${repo}/issues`;
+    getMorePosts() {        
+        let urlRepo = baseURL + `/repos/${this.state.username}/${this.state.repo}/issues`;
         
         axios.get(urlRepo, {
             params: {
@@ -62,6 +64,26 @@ export default class Master extends Component {
         })
     }
 
+    getAllLabels() {
+        axios.get(baseURL + `/repos/${this.state.username}/${this.state.repo}/labels`)
+        .then((response) => {
+            let data = response.data
+            console.log(data);
+            let labelArray = [];
+            for (let i = 0; i < data.length; i++) {
+                let labels = {
+                    name: data[i].name,
+                    description: data[i].description,
+                    color: data[i].color,
+                    id: data[i].id,
+                };
+                labelArray.push(labels);
+            }
+            this.setState({AllLabels: labelArray});
+        })
+    
+    }
+
     // getInitialState() {
     //     return {
     //       activeDrags: 0,
@@ -89,10 +111,7 @@ export default class Master extends Component {
     }
 
     onStop = (e, src) => {
-        //console.log(e);
         console.log(src)
-        //const card = src.closest(".issuecard"); 
-        //console.log(card);
         const oldrelease = src.node.closest(".cardlocater");
         const newrelease = document.querySelector('.cardlocater:hover'); //Finds the element we were hovering the draggable component over when we dropped it
         console.log(oldrelease);
@@ -109,10 +128,10 @@ export default class Master extends Component {
 
         if(oldreleaseindex === newreleaseindex)
         {
+            this.setState({isDragging: false});
             return;
         }
 
-        //const card = e.srcElement.closest(".issuecard"); //Finds the issue card which represents the dragged element
         const issue = src.node.getAttribute('data-issue'); //Reads the issue card for the issue attribute which has the stored issue
         console.log(issue)
 
@@ -150,7 +169,7 @@ export default class Master extends Component {
         }
 
         let newarray = this.state.AllReleases[oldReleaseIndex].slice();
-        newarray.splice(newarray[oldReleaseIndex].indexOf(issueNumber), 1);
+        newarray.splice(newarray.indexOf(issueNumber), 1);
         let newallreleases = this.state.AllReleases.slice();
         newallreleases[oldReleaseIndex] = newarray
         this.setState({AllReleases: newallreleases});
@@ -168,54 +187,76 @@ export default class Master extends Component {
         this.setState({AllReleases: newallreleases});
     }
 
-    // // For controlled component
-    // adjustXPos = (e) => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     const {x, y} = this.state.controlledPosition;
-    //     this.setState({controlledPosition: {x: x - 10, y}});
-    // }
+    handleChange = event => {
+        console.log(this);
+        let labelsarray = this.state.ActiveLabels.slice();
+        this.addOrRemove(labelsarray, event.target.value)
+        this.setState({ ActiveLabels: labelsarray });
+    };
 
-    // adjustYPos = (e) => {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     const {controlledPosition} = this.state;
-    //     const {x, y} = controlledPosition;
-    //     this.setState({controlledPosition: {x, y: y - 10}});
-    // }
-
-    // onControlledDrag = (e, position) => {
-    //     const {x, y} = position;
-    //     this.setState({controlledPosition: {x, y}});
-    // }
-
-    // onControlledDragStop = (e, position) => {
-    //     this.onControlledDrag(e, position);
-    //     this.onStop();
-    // }
+    addOrRemove(array, value) {
+        var index = array.indexOf(value);
     
+        if (index === -1) {
+            array.push(value);
+        } else {
+            array.splice(index, 1);
+        }
+    }
+
+    startViewingIssue = (issuenumber) => {
+        console.log(this);
+        this.setState({
+            ViewingIssue: parseInt(issuenumber),
+            isDragging: false});
+    }
+
+    cancelView = () => {
+        this.setState({
+            ViewingIssue: false,
+            isDragging: false});
+    }
 
     render() {
         //console.log(this.state.AllReleases)
         const vardragHandlers = {onStart: this.onStart, onStop: this.onStop, onDrag: this.handleDrag};
+
+        if(this.state.ViewingIssue !== false)
+        {
+            return(
+                <div>
+                    <IssueWindow
+                    username = {this.state.username}
+                    reponame = {this.state.repo}
+                    issue = {this.state.issue}
+                    cancelView = {this.cancelView} />
+                </div>
+            )
+        }
+
         return (
             <div>
-                <SearchFilter />
+                <SearchFilter 
+                labelsarray = {this.state.ActiveLabels}
+                allLabels = {this.state.AllLabels}
+                handleChange={this.handleChange} />
+                <Minimap></Minimap>
                 <div className="issueloader">
                     <IssueLoader 
                     cards={this.state.issueArray} 
                     isDragging={this.state.isDragging} 
                     dragHandlers={vardragHandlers}
-                    allReleases = {this.state.AllReleases} />
+                    allReleases = {this.state.AllReleases}
+                    viewIssue={this.startViewingIssue} />
                 </div>
                 <div className="allholder">
                     <ReleaseView 
                     cards={this.state.issueArray} 
                     isDragging={this.state.isDragging} 
                     dragHandlers={vardragHandlers} 
-                    allReleases={this.state.AllReleases} />
+                    allReleases={this.state.AllReleases}
+                    viewIssue={this.startViewingIssue} />
                 </div>
-                {/* <IssueWindow /> */}
             </div>
         )
     }
