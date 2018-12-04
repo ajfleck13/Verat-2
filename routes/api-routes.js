@@ -1,4 +1,6 @@
-const Note = require('../models/Note');
+const Save = require('../models/Save');
+const User = require('../models/User');
+
 
 module.exports = function (app) {
 

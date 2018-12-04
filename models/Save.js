@@ -13,11 +13,11 @@ const SaveSchema = new Schema({
     type: String,
     required: "There must be a repository attached to this save"
   },
-  releases: [
-    {
-      type: Int,
-    }
-  ],
+  // releases: [
+  //   {
+  //     type: Int,
+  //   }
+  // ],
   // arrowsTo: [
   //   {
   //     type: Int,
