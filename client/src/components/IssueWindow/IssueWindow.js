@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import IssueComment from './IssueComment';
+import IssuePost from './IssuePost';
 import Button from '@material-ui/core/Button';
 import './issuestructure.css'
+
 
 const baseURL = "https://api.github.com"
 
@@ -77,6 +79,16 @@ export default class IssueWindow extends Component {
                         />
                     )})
                 }
+
+                {this.state.loadedTitle? 
+                <div>
+                    <IssuePost 
+                    username = {this.state.titleComment.user.login}
+                    avatar_url = {this.state.titleComment.user.avatar_url}/>
+                </div>
+                : null
+                }
+
             </div>
         )
     }

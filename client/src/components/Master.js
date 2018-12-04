@@ -217,6 +217,15 @@ export default class Master extends Component {
             isDragging: false});
     }
 
+    createSave = () => {
+        axios.post('/api/mysave', {
+            saveNumber: this.props.saveNumber || 1,
+            repousername: this.state.username,
+            reponame: this.state.repo,
+            releases: this.state.AllReleases
+        });
+    }
+
     render() {
         //console.log(this.state.AllReleases)
         const vardragHandlers = {onStart: this.onStart, onStop: this.onStop, onDrag: this.handleDrag};
@@ -239,7 +248,8 @@ export default class Master extends Component {
                 <SearchFilter 
                 labelsarray = {this.state.ActiveLabels}
                 allLabels = {this.state.AllLabels}
-                handleChange={this.handleChange} />
+                handleChange={this.handleChange}
+                saveClick={this.createSave} />
                 {/* <Minimap></Minimap> */}
                 <div className="issueloader">
                     <IssueLoader 

@@ -25,18 +25,22 @@ export default class HomePage extends Component {
     getUser = () => {
         if(this.state.username && this.state.username.length > 5)
         {
-            axios.get(`/api/mysaves/${this.state.username}`)
-            .then((response) => {
-                console.log(response);
-                this.setState({
-                    loadedSaves: true,
-                    saves: response
-                })
-            }).catch((response) => {
-                this.setState({
-                    loadedSaves: true
-                })
+            this.setState({
+                loadedSaves: true,
+                saves: null
             })
+            // axios.get(`/api/mysaves/${this.state.username}`)
+            // .then((response) => {
+            //     console.log(response);
+            //     this.setState({
+            //         loadedSaves: true,
+            //         saves: response
+            //     })
+            // }).catch((response) => {
+            //     this.setState({
+            //         loadedSaves: true
+            //     })
+            // })
         }
     }
 
@@ -64,7 +68,7 @@ export default class HomePage extends Component {
             )
         }
         return(
-            <div style={{marginTop: "30%"}}>
+            <div style={{marginTop: "20%"}}>
                 {
                     !this.state.loadedSaves? 
                     <div>

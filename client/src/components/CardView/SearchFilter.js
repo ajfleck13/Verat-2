@@ -59,7 +59,7 @@ export default class SearchFilter extends Component {
                 className="searchinput"
                 placeholder="Filter Issues" />
 
-                <Button variant="outlined" style={{marginLeft: "50px"}}>
+                <Button variant="outlined" onClick={this.props.saveClick} style={{marginLeft: "50px"}}>
                     Save
                 </Button>
             </div>
