@@ -1,0 +1,18 @@
+.githubavatar {
+    width: 64px;
+    height: 64px;
+}
+
+.commentbody {
+    border: 1px grey solid;
+    padding: 3px;
+}
+
+.commentheader {
+    background-color: #E0E0E0;
+    border: 1px grey solid;
+}
+
+.titlecase {
+    text-transform: capitalize;
+}

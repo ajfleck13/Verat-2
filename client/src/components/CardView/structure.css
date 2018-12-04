@@ -1,0 +1,52 @@
+.issueloader {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 300px;
+    overflow: scroll;
+}
+
+.allholder {
+    position: fixed;
+    top: 300px;
+    width: 100%;
+    bottom: 0px;
+}
+
+.loader {
+    /* overflow-x: scroll; */
+    height: 300px;
+}
+
+.releaseview {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    background-color: darkblue;
+    /* overflow-x: scroll; */
+}
+
+.newrelease {
+    display: inline-block;
+    height: 300px;
+    width: 300px;
+    background-color: blue;
+}
+
+.release {
+    display: inline-block;
+    position: relative;
+    top: 30px;
+    height: 100%;
+    width: 300px;
+    background-color: aqua;
+}
+
+.cardlocater:hover {
+    border: 5px #3a9c3a solid;
+}
+
+.draggingCardsPreventEvents {
+    pointer-events: none;
+}
