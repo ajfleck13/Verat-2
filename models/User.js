@@ -9,10 +9,10 @@ const UserSchema = new Schema({
     type: String,
     required: "There must be a username attached to this save"
   },
-  // Saves: [{
-  //   type: Schema.Types.refID,
-  //   ref: "Save"
-  // }],
+  Save: [{
+    type: Schema.Types.ObjectId,
+    ref: "Save"
+  }],
 });
 
 // This creates our model from the above schema, using Mongoose's model method

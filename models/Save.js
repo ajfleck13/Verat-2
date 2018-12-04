@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new TweetSchema object
 const SaveSchema = new Schema({
+  saveNumber: {
+    type: Number
+  },
   repousername: {
     type: String,
     required: "There must be a username attached to this save"
@@ -13,21 +16,7 @@ const SaveSchema = new Schema({
     type: String,
     required: "There must be a repository attached to this save"
   },
-  // releases: [
-  //   {
-  //     type: Int,
-  //   }
-  // ],
-  // arrowsTo: [
-  //   {
-  //     type: Int,
-  //   }
-  // ],
-  // arrowsFrom: [
-  //   {
-  //     type: Int
-  //   }
-  // ]
+  releases: {},
 });
 
 // This creates our model from the above schema, using Mongoose's model method
