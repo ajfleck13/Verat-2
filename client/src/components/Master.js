@@ -130,7 +130,7 @@ export default class Master extends Component {
 
         console.log(this.state);
         //If we aren't just stealing a loader array element
-        //this.removeIssueFromRelease(issueNumber, oldReleaseIndex);
+        this.removeIssueFromRelease(issueNumber, oldReleaseIndex);
         console.log(this.state)
         this.addIssueToRelease(issueNumber, newReleaseIndex);
         console.log(this.state)
@@ -196,7 +196,7 @@ export default class Master extends Component {
     
 
     render() {
-        console.log(this.state.AllReleases)
+        //console.log(this.state.AllReleases)
         const vardragHandlers = {onStart: this.onStart, onStop: this.onStop, onDrag: this.handleDrag};
         return (
             <div>
