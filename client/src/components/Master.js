@@ -22,6 +22,11 @@ export default class Master extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            username: this.props.username || 'ajfleck13',
+            repo: this.props.repository || 'project-verat',
+        })
+
         this.getMorePosts();
         this.getAllLabels();
     }

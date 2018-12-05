@@ -9,12 +9,35 @@ import Master from '../Master'
 
 export default class HomePage extends Component {
     state = {
+        //API loading info
         username: "",
-        loadedSaves: false,
         saves: null,
-        creatingNewSave: null,
-        usingVerat: false
+
+        //UI state directors
+        loadedSaves: false,
+        creatingNewSave: false,
+        usingVerat: false,
+
+        //Project starting variables
+        usingVerat: false,
+        saveNumber: null,
+        saveToLoad: null,
+        user: "",
+        repo: "",
     }
+
+    //Authorize app with github to get user identity
+    componentDidMount() {
+        // axios.get('https://github.com/login/oauth/authorize')
+        // .then((response) => {
+        //     let data = response.data;
+        //     this.setState({
+        //         username: data.client_id
+        //     })
+        //     this.getUser()
+        // })
+    }
+
 
     handleChange = (field, event) => {
         let object = {}
@@ -45,23 +68,64 @@ export default class HomePage extends Component {
     }
 
     loadSave = (value) => {
+        if(this.saveExists(value))
+        {
+            this.setState({
+                usingVerat: true,
+                saveToLoad: this.saveExists(value),
+                saveNumber: value
+            })
+        }
+        else
+        {
+            this.setState({
+                creatingNewSave: true,
+                saveNumber: value
+            })
+        }
+    }
+
+    startNewProject = () => {
         this.setState({
-            creatingNewSave: value
+            usingVerat: true,
         })
     }
 
-    loadProject = () => {
-        this.setState({
-            usingVerat: true
-        })
+    saveExists = (index) => {
+        if(this.state.saves === null)
+        {
+            return null;
+        }
+
+        this.state.saves.forEach(save => {
+            if(parseInt(save.saveNumber) === index)
+            {
+                return save;
+            }
+        });
+
+        return null;
     }
     
+    saveString = (index) => {
+        let save = this.saveExists(index);
+        if(save === null)
+        {
+            return "Create New Save";
+        }
+        else
+        {
+            return `Save from : ${save.repousername} / ${save.reponame}`;
+        }
+    }
 
     render() {
         if(this.state.usingVerat)
         {
             return (
                 <Master 
+                saveNumber = {this.state.saveNumber}
+                saveToLoad = {this.state.saveToLoad}
                 username={this.state.user}
                 repository={this.state.repo}
                 />
@@ -85,23 +149,29 @@ export default class HomePage extends Component {
                         </Button>
                     </div>
                     :
-                    this.state.creatingNewSave === null ?
+                    !this.state.creatingNewSave ?
                     <div>
                         <h1>Load Save From Prior Saves</h1>
 
                         <h4>Save #1</h4>
                         <Button onClick={() => this.loadSave(0)} variant="outlined">
-                            Create New Save
+                            {
+                                this.saveString(0)
+                            }
                         </Button>
                         <br /><br />
                         <h4>Save #2</h4>
                         <Button onClick={() => this.loadSave(1)} variant="outlined">
-                            Create New Save
+                            {
+                                this.saveString(1)
+                            }
                         </Button>
                         <br /><br />
                         <h4>Save #3</h4>
                         <Button onClick={() => this.loadSave(2)} variant="outlined">
-                            Create New Save
+                            {
+                                this.saveString(2)
+                            }
                         </Button>                        
                     </div>
                     :
@@ -115,7 +185,7 @@ export default class HomePage extends Component {
                         <InputLabel>Repository Name:  </InputLabel>
                         <Input onChange={(event) => (this.handleChange("repo", event))} name="repo" value={this.state.repo} placeholder="" />
                         <br /><br />
-                        <Button onClick={this.loadProject} variant="outlined">
+                        <Button onClick={this.startNewProject} variant="outlined">
                             Begin Project
                         </Button>
                     </div>
